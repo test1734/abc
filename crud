@@ -1,0 +1,138 @@
+CRUD (Insert,Display,Delete)
+WebForm1.aspx:
+<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="WebForm1.aspx.cs" Inherits="crud.WebForm1" %>
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title>Order Management</title>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <div>
+            <label>OrderID</label>
+            <asp:TextBox ID="OrderID" runat="server" placeholder="Enter Order ID" /><br />
+
+            <label>OrderName</label>
+            <asp:TextBox ID="OrderName" runat="server" placeholder="Enter Order Name" /><br />
+
+            <label>Price</label>
+            <asp:TextBox ID="Price" runat="server" placeholder="Enter Price" /><br /><br />
+
+            <asp:Button ID="insert" runat="server" Text="Insert" OnClick="insert_Click" />
+            <asp:Button ID="display" runat="server" Text="Display" OnClick="display_Click" />
+            <asp:Button ID="delete" runat="server" Text="Delete" OnClick="delete_Click" /><br /><br />
+
+            <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="true" OnSelectedIndexChanged="GridView1_SelectedIndexChanged"></asp:GridView>
+        </div>
+    </form>
+</body>
+</html>
+
+WebForm1.aspx.cs:
+using System;
+using System.Data;
+using System.Data.SqlClient;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+
+namespace crud
+{
+    public partial class WebForm1 : System.Web.UI.Page
+    {
+        string conString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Order;Integrated Security=True";
+
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if (!IsPostBack)
+            {
+                GridView1.Visible = false;
+            }
+        }
+
+        protected void insert_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(OrderID.Text) || string.IsNullOrWhiteSpace(OrderName.Text) || string.IsNullOrWhiteSpace(Price.Text))
+            {
+                ShowMessage("❗ All fields are required!");
+                return;
+            }
+
+            using (SqlConnection con = new SqlConnection(conString))
+            {
+                con.Open();
+
+                string query = "INSERT INTO [Order] (OrderID, OrderName, Price) VALUES (@OrderID, @OrderName, @Price)";
+                using (SqlCommand cmd = new SqlCommand(query, con))
+                {
+                    cmd.Parameters.AddWithValue("@OrderID", Convert.ToInt32(OrderID.Text));
+                    cmd.Parameters.AddWithValue("@OrderName", OrderName.Text);
+                    cmd.Parameters.AddWithValue("@Price", Convert.ToDecimal(Price.Text));
+
+                    cmd.ExecuteNonQuery();
+                    ShowMessage("✅ Record Inserted Successfully!");
+                }
+            }
+        }
+
+        protected void display_Click(object sender, EventArgs e)
+        {
+            using (SqlConnection con = new SqlConnection(conString))
+            {
+                con.Open();
+                string query = "SELECT OrderID, OrderName, Price FROM [Order]";
+
+                using (SqlCommand cmd = new SqlCommand(query, con))
+                {
+                    using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                    {
+                        DataTable dt = new DataTable();
+                        da.Fill(dt);
+                        GridView1.DataSource = dt;
+                        GridView1.DataBind();
+                        GridView1.Visible = true;
+                    }
+                }
+            }
+        }
+
+        protected void delete_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(OrderID.Text))
+            {
+                ShowMessage("❗ Please enter a valid Order ID!");
+                return;
+            }
+
+            using (SqlConnection con = new SqlConnection(conString))
+            {
+                con.Open();
+                string query = "DELETE FROM [Order] WHERE OrderID = @OrderID";
+
+                using (SqlCommand cmd = new SqlCommand(query, con))
+                {
+                    cmd.Parameters.AddWithValue("@OrderID", Convert.ToInt32(OrderID.Text));
+                    int rows = cmd.ExecuteNonQuery();
+
+                    ShowMessage(rows > 0 ? "✅ Record Deleted!" : "⚠️ No Record Found!");
+                }
+            }
+        }
+
+        protected void GridView1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            GridViewRow row = GridView1.SelectedRow;
+
+            OrderID.Text = row.Cells[0].Text;
+            OrderName.Text = row.Cells[1].Text;
+            Price.Text = row.Cells[2].Text;
+        }
+
+        private void ShowMessage(string message)
+        {
+            string script = $"alert('{message}');";
+            ScriptManager.RegisterStartupScript(this, GetType(), "alertMessage", script, true);
+        }
+    }
+}
+
