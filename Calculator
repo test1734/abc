@@ -1,0 +1,78 @@
+Exp No: 07 
+Calculator/CalculatorServices.asmx.cs 
+using System.Web.Services; 
+namespace Calculator 
+{ 
+[WebService(Namespace = "http://tempuri.org/")] 
+[WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)] 
+[System.ComponentModel.ToolboxItem(false)] 
+public class CalculatorService : WebService  { 
+[WebMethod] 
+public double Add(double a, double b) => a + b; 
+[WebMethod] 
+public double Subtract(double a, double b) => a - b; 
+[WebMethod] 
+public double Multiply(double a, double b) => a * b; 
+[WebMethod] 
+public double Divide(double a, double b) => b == 0 ? double.NaN : a / b; 
+[WebMethod] 
+public double Modulus(double a, double b) => a % b; 
+[WebMethod] 
+public double Power(double a, double b) => System.Math.Pow(a, b); 
+} } 
+CalculatorClient 
+Default.aspx 
+<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Default.aspx.cs" 
+Inherits="CalculatorClient.Default" %> 
+<!DOCTYPE html> 
+<html> 
+<head><title>Calculator</title></head> 
+<body> 
+<form id="form1" runat="server"> 
+<div> 
+Number 1: <asp:TextBox ID="txtNum1" runat="server" /><br /><br /> 
+Number 2: <asp:TextBox ID="txtNum2" runat="server" /><br /><br /> 
+<asp:Button ID="btnAdd" runat="server" Text="Add" OnClick="btnAdd_Click" /> 
+<asp:Button ID="btnSubtract" runat="server" Text="Subtract" OnClick="btnSubtract_Click" /> 
+<asp:Button ID="btnMultiply" runat="server" Text="Multiply" OnClick="btnMultiply_Click" /> 
+<asp:Button ID="btnDivide" runat="server" Text="Divide" OnClick="btnDivide_Click" /> 
+<asp:Button ID="btnModulus" runat="server" Text="Modulus" OnClick="btnModulus_Click" /> 
+<asp:Button ID="btnPower" runat="server" Text="Power" OnClick="btnPower_Click" /><br /><br /> 
+<asp:Label ID="lblResult" runat="server" Text="" /> 
+</div> 
+</form> 
+</body> 
+</html> 
+Default.aspx.cs 
+using System; 
+using CalculatorClient.CalculatorService; 
+namespace CalculatorClient 
+{ 
+public partial class Default : System.Web.UI.Page 
+{ 
+CalculatorServiceSoapClient client = new CalculatorServiceSoapClient(); 
+protected void btnAdd_Click(object sender, EventArgs e) 
+{ 
+lblResult.Text = "Result: " + client.Add(GetInput1(), GetInput2()); 
+} 
+protected void btnSubtract_Click(object sender, EventArgs e) 
+{ 
+lblResult.Text = "Result: " + client.Subtract(GetInput1(), GetInput2()); 
+} 
+protected void btnMultiply_Click(object sender, EventArgs e) 
+{ 
+lblResult.Text = "Result: " + client.Multiply(GetInput1(), GetInput2()); 
+} 
+protected void btnDivide_Click(object sender, EventArgs e) 
+{ 
+lblResult.Text = "Result: " + client.Divide(GetInput1(), GetInput2()); 
+} 
+protected void btnModulus_Click(object sender, EventArgs e) { 
+lblResult.Text = "Result: " + client.Modulus(GetInput1(), GetInput2());  } 
+protected void btnPower_Click(object sender, EventArgs e) { 
+lblResult.Text = "Result: " + client.Power(GetInput1(), GetInput2());  } 
+private double GetInput1() => Convert.ToDouble(txtNum1.Text); 
+private double GetInput2() => Convert.ToDouble(txtNum2.Text); 
+} 
+} 
+OUTPUT: 
