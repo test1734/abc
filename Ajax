@@ -1,0 +1,58 @@
+6.AJAX
+
+WebForm1.aspx
+<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="WebForm1.aspx.cs" Inherits="ajax.WebForm1" %>
+<!DOCTYPE html>
+<html>
+<head runat="server">
+    <title>Order Entry</title>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <asp:ScriptManager ID="ScriptManager1" runat="server" />
+        <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+            <ContentTemplate>
+                <h2>Order Entry</h2>
+                <label>Order ID:</label><asp:TextBox ID="txtOrderID" runat="server" /><br />
+                <label>Product Name:</label><asp:TextBox ID="txtProductName" runat="server" /><br />
+                <label>Price:</label><asp:TextBox ID="txtPrice" runat="server" /><br /><br />
+                <asp:Button ID="btnSubmit" runat="server" Text="Insert Order" OnClick="btnSubmit_Click" /><br />
+                <asp:Label ID="lblStatus" runat="server" ForeColor="Green" /><h3>Order List:</h3>
+                <asp:PlaceHolder ID="phOrders" runat="server" />
+            </ContentTemplate>
+        </asp:UpdatePanel>
+    </form>
+</body>
+</html>
+
+WebForm1.aspx.cs
+using System;
+using System.Collections.Generic;
+using System.Web.UI.WebControls;
+
+namespace ajax
+{
+    public partial class WebForm1 : System.Web.UI.Page
+    {
+        static List<string> orderList = new List<string>();
+
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if (!IsPostBack) DisplayOrders();
+        }
+
+        protected void btnSubmit_Click(object sender, EventArgs e)
+        {
+            orderList.Insert(0, $"<b>Order ID:</b> {txtOrderID.Text}<br /><b>Product Name:</b> {txtProductName.Text}<br /><b>Price:</b> {txtPrice.Text}<hr />");
+            lblStatus.Text = "Order inserted!";
+            txtOrderID.Text = txtProductName.Text = txtPrice.Text = "";
+            DisplayOrders();
+        }
+
+        void DisplayOrders()
+        {
+            phOrders.Controls.Clear();
+            foreach (var order in orderList) phOrders.Controls.Add(new Label { Text = $"<div>{order}</div>" });
+        }
+    }
+}
