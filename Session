@@ -1,0 +1,71 @@
+WebForm1.aspx:
+<%@ Page AutoEventWireup="true" CodeBehind="WebForm1.aspx.cs" Inherits="ShoppingCartApp.WebForm1" Language="C#" %>
+
+<!DOCTYPE html>
+    <meta charset="UTF-8" />
+<html>
+<body>
+   <h1>Product List</h1>
+
+    <div>
+        <h3>Product A</h3>
+        <p> Price: $10</p>
+        <a href="WebForm1.aspx?addToCart=Product A&amp;price=10">Add to Cart</a>
+    </div>
+
+    <div>
+        <h3>Product B</h3>
+        <p> Price: $15</p>
+        <a href="WebForm1.aspx?addToCart=Product B&amp;price=15">Add to Cart</a>
+    </div>
+    <h2>Your Shopping Cart</h2>
+    <div>
+        <% 
+            if (Session["cart"] != null)
+            {
+                var cart = (List<string>)Session["cart"];
+                foreach (var item in cart)
+                {
+                    Response.Write("<div>" + item + "</div>");
+                }
+            }
+            else
+            {
+                Response.Write("<p>Your cart is empty.</p>");
+            }
+        %>
+    </div>
+</body>
+</html>
+
+WebForm1.aspx.cs:
+using System;
+using System.Collections.Generic;
+
+namespace ShoppingCartApp
+{
+    public partial class WebForm1 : System.Web.UI.Page
+    {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if (Request.QueryString["addToCart"] != null)
+            {
+                string productName = Request.QueryString["addToCart"];
+                string productPrice = Request.QueryString["price"];
+
+                if (Session["cart"] == null)
+                {
+                    Session["cart"] = new List<string>();
+                }
+
+                var cart = (List<string>)Session["cart"];
+                cart.Add(productName + " - $" + productPrice);
+
+                Response.Redirect("WebForm1.aspx");
+            }
+        }
+    }
+}
+
+
+
