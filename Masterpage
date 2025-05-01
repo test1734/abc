@@ -1,0 +1,266 @@
+Ex.2: MASTER PAGE 
+ 
+CODING: 
+ 
+Site.Master: 
+ 
+<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" 
+Inherits="ex2net.SiteMaster" %> 
+ 
+<!DOCTYPE html> 
+ 
+<html lang="en"> 
+<head runat="server"> 
+    <meta charset="utf-8" /> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
+    <title><%: Page.Title %> - My ASP.NET Application</title> 
+    <asp:PlaceHolder runat="server"> 
+        <%: Scripts.Render("~/bundles/modernizr") %> 
+    </asp:PlaceHolder> 
+    <webopt:bundlereference runat="server" path="~/Content/css" /> 
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" /> 
+</head> 
+<body> 
+    <form runat="server"> 
+        <asp:ScriptManager runat="server"> 
+            <Scripts> 
+                <asp:ScriptReference Name="MsAjaxBundle" /> 
+                <asp:ScriptReference Name="jquery" /> 
+                <asp:ScriptReference Name="WebForms.js" Assembly="System.Web" 
+Path="~/Scripts/WebForms/WebForms.js" /> 
+                <asp:ScriptReference Name="WebUIValidation.js" Assembly="System.Web" 
+Path="~/Scripts/WebForms/WebUIValidation.js" /> 
+                <asp:ScriptReference Name="MenuStandards.js" Assembly="System.Web" 
+Path="~/Scripts/WebForms/MenuStandards.js" /> 
+                <asp:ScriptReference Name="GridView.js" Assembly="System.Web" 
+Path="~/Scripts/WebForms/GridView.js" /> 
+                <asp:ScriptReference Name="DetailsView.js" Assembly="System.Web" 
+Path="~/Scripts/WebForms/DetailsView.js" /> 
+                <asp:ScriptReference Name="TreeView.js" Assembly="System.Web" 
+Path="~/Scripts/WebForms/TreeView.js" /> 
+                <asp:ScriptReference Name="WebParts.js" Assembly="System.Web" 
+Path="~/Scripts/WebForms/WebParts.js" /> 
+                <asp:ScriptReference Name="Focus.js" Assembly="System.Web" 
+Path="~/Scripts/WebForms/Focus.js" /> 
+                <asp:ScriptReference Name="WebFormsBundle" /> 
+            </Scripts> 
+        </asp:ScriptManager> 
+ 
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark"> 
+            <div class="container"> 
+                <a class="navbar-brand" runat="server" href="~/Home.aspx"><b>FLOWER 
+SHOP</b></a> 
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs
+target=".navbar-collapse" title="Toggle navigation" aria-controls="navbarSupportedContent" 
+                    aria-expanded="false" aria-label="Toggle navigation"> 
+                    <span class="navbar-toggler-icon"></span> 
+                </button> 
+                <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between"> 
+                    <ul class="navbar-nav flex-grow-1"> 
+                        <li class="nav-item"><a class="nav-link" runat="server" 
+href="~/Home.aspx">Home</a></li> 
+                        <li class="nav-item"><a class="nav-link" runat="server" 
+href="~/About.aspx">About</a></li> 
+                        <li class="nav-item"><a class="nav-link" runat="server" 
+href="~/Contact.aspx">Contact</a></li> 
+                    </ul> 
+                </div> 
+            </div> 
+        </nav> 
+        <div class="container body-content"> 
+            <asp:ContentPlaceHolder ID="MainContent" runat="server"> 
+            </asp:ContentPlaceHolder> 
+            <hr /> 
+            <footer> 
+                <p>&copy; <%: DateTime.Now.Year %> - My ASP.NET Application</p> 
+            </footer> 
+        </div> 
+    </form> 
+    <asp:PlaceHolder runat="server"> 
+        <%: Scripts.Render("~/Scripts/bootstrap.js") %> 
+    </asp:PlaceHolder> 
+</body> 
+</html> 
+ 
+Home.aspx: 
+ 
+<%@ Page Title="Home" Language="C#" MasterPageFile="~/Site.Master" 
+AutoEventWireup="true" CodeBehind="Home.aspx.cs" Inherits="ex2net.Home" %> 
+ 
+<asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server"> 
+    <h2>Welcome to Our Flower Shop</h2> 
+    <p>Find the most beautiful flowers for every occasion.</p> 
+ 
+    <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;"> 
+        <div style="text-align: center;"> 
+            <asp:Image ID="imgControl" runat="server"  
+                ImageUrl="https://cdn.igp.com/f_auto,q_auto,t_pnopt12prodlp/products/p
+blushing-red-roses-bouquet-202274-m.jpg"  
+                Width="300" Height="400" /> 
+            <p><b>Red Rose</b> - A symbol of love and passion.</p> 
+            <p><b>Price:</b> ₹1000</p> 
+        </div> 
+ 
+        <div style="text-align: center;"> 
+            <asp:Image ID="Image1" runat="server"  
+                
+ImageUrl="https://th.bing.com/th/id/OIP.PZ2eH1xGdOx1pvCrfvoTmwHaI0?w=167&h=198
+ &c=7&r=0&o=5&dpr=1.3&pid=1.7"  
+                Width="300" Height="400" /> 
+            <p><b>Tulip</b> - Bright and cheerful, perfect for any occasion.</p> 
+            <p><b>Price:</b> ₹1200</p> 
+        </div> 
+ 
+        <div style="text-align: center;"> 
+            <asp:Image ID="Image2" runat="server"  
+                ImageUrl="https://th.bing.com/th/id/OIP.cXtluIDeI5vsXl-eisag
+gHaIG?w=192&h=211&c=7&r=0&o=5&dpr=1.3&pid=1.7"  
+                Width="300" Height="400" /> 
+            <p><b>White Lily</b> - Represents purity and peace.</p> 
+            <p><b>Price:</b> ₹1500</p> 
+        </div> 
+ 
+        <div style="text-align: center;"> 
+            <asp:Image ID="Image3" runat="server"  
+                
+ImageUrl="https://th.bing.com/th/id/OIP.wJm5dQpBQSHtFQZ5B82Z5gHaNK?w=187&h=3
+ 33&c=7&r=0&o=5&dpr=1.3&pid=1.7"  
+                Width="300" Height="400" /> 
+            <p><b>Sunflower</b> - Represents loyalty, adoration, and longevity.</p> 
+            <p><b>Price:</b> ₹900</p> 
+        </div> 
+    </div> 
+</asp:Content> 
+ 
+Home.aspx.cs: 
+ 
+using System; 
+using System.Web.UI; 
+ 
+namespace ex2net 
+{ 
+    public partial class Home : Page 
+    { 
+        protected void Page_Load(object sender, EventArgs e) 
+        { 
+        } 
+    } 
+} 
+ 
+About.aspx: 
+ 
+<%@ Page Title="About Us" Language="C#" MasterPageFile="~/Site.Master" 
+AutoEventWireup="true" CodeBehind="About.aspx.cs" Inherits="ex2net.About" %> 
+ 
+<asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server"> 
+    <style> 
+        .about-container { 
+            text-align: center; 
+            padding: 20px; 
+        } 
+        .hero-image { 
+            width: 100%; 
+            max-height: 400px; 
+            object-fit: cover; 
+            border-radius: 10px; 
+            transition: transform 0.5s ease-in-out; 
+        } 
+        .hero-image:hover { 
+            transform: scale(1.05); 
+        } 
+        .section { 
+            margin-top: 30px; 
+        } 
+    </style> 
+ 
+    <div class="about-container"> 
+        <asp:Image ID="imgControl" runat="server" 
+ImageUrl="https://th.bing.com/th/id/OIP.iJmVdLimkFr9UqDSHrfSoAHaGI?w=215&h=180
+ &c=7&r=0&o=5&dpr=1.3&pid=1.7" Width="500" Height="300"/> 
+ 
+        <div class="section"> 
+            <h2>Welcome to Our Flower Shop</h2> 
+            <p>Where passion meets creativity! For over a decade, we have been bringing 
+happiness to people’s lives with stunning floral designs.</p> 
+        </div> 
+ 
+        <div class="section"> 
+            <h3>Our Story</h3> 
+            <p>Founded in 2020, we started as a small business. With dedication and love for 
+flowers, we have grown into a leading florist known for premium arrangements.</p> 
+        </div> 
+ 
+        <div class="section"> 
+            <h3>Why Choose Us?</h3> 
+                         <h2>       <strong>Fresh & Quality Flowers</strong> - Handpicked from the 
+best growers.</h2> 
+                <h2>      <strong>Custom Arrangements</strong> - Perfect for every 
+occasion.</h2> 
+                <h2>        <strong>Timely Delivery</strong> - Flowers that arrive fresh, every 
+time.</h2> 
+                <h2>       <strong>Trusted by Customers</strong> - Rated 5 stars for exceptional 
+service.</h2>         
+        </div> 
+ 
+        <div class="section"> 
+            <h3>Our Commitment</h3> 
+            <p>We believe flowers connect people. Every bouquet we craft is a token of love, 
+appreciation, and emotion.</p> 
+        </div> 
+ 
+        <p><strong>Thank you for making us a part of your cherished moments! 
+  </strong></p> 
+    </div> 
+</asp:Content> 
+ 
+About.aspx.cs: 
+ 
+using System; 
+using System.Web.UI; 
+ 
+namespace ex2net 
+{ 
+    public partial class About : Page 
+    { 
+        protected void Page_Load(object sender, EventArgs e) 
+        { 
+        } 
+    } 
+} 
+ 
+Contact.aspx: 
+ 
+<%@ Page Title="Contact Us" Language="C#" MasterPageFile="~/Site.Master" 
+AutoEventWireup="true" CodeBehind="Contact.aspx.cs" Inherits="ex2net.Contact" %> 
+ 
+<asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server"> 
+    <h2>Contact Us</h2> 
+    <p>Email: contact@flowershop.com</p> 
+    <p>Phone: +123 456 7890</p> 
+    <p>Address: 123 Flower Street, Blossom City</p> 
+</asp:Content> 
+ 
+Contact.aspx.cs: 
+ 
+using System; 
+using System.Web.UI; 
+ 
+namespace ex2net 
+{ 
+    public partial class Contact : Page 
+    { 
+        protected void Page_Load(object sender, EventArgs e) 
+        { 
+        } 
+    } 
+} 
+ 
+OUTPUT: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
