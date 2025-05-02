@@ -1,4 +1,4 @@
-CRUD (Insert,Display,Delete)
+jiCRUD (Insert,Display,Delete)
 WebForm1.aspx:
 <%@ Page Language="C#" AutoEventWireup="true" CodeBehind="WebForm1.aspx.cs" Inherits="crud.WebForm1" %>
 
@@ -135,4 +135,13 @@ namespace crud
         }
     }
 }
+
+
+
+table 
+CREATE TABLE [dbo].[Order] (
+    OrderId INT NOT NULL PRIMARY KEY,
+    OrderName NVARCHAR(50) NOT NULL,
+    Price DECIMAL(18, 0) NOT NULL
+);
 
