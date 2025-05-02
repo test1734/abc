@@ -1,0 +1,80 @@
+aspx
+
+
+<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="CalculatorApp.Default" %>
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title>Basic Calculator</title>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <div style="text-align:center;">
+            <h2>Basic Calculator</h2>
+            <asp:Label ID="lbl1" runat="server" Text="Enter Number 1: "></asp:Label>
+            <asp:TextBox ID="txtNum1" runat="server"></asp:TextBox><br /><br />
+
+            <asp:Label ID="lbl2" runat="server" Text="Enter Number 2: "></asp:Label>
+            <asp:TextBox ID="txtNum2" runat="server"></asp:TextBox><br /><br />
+
+            <asp:Button ID="btnAdd" runat="server" Text="Add" OnClick="btnAdd_Click" />
+            <asp:Button ID="btnSub" runat="server" Text="Subtract" OnClick="btnSub_Click" />
+            <asp:Button ID="btnMul" runat="server" Text="Multiply" OnClick="btnMul_Click" />
+            <asp:Button ID="btnDiv" runat="server" Text="Divide" OnClick="btnDiv_Click" /><br /><br />
+
+            <asp:Label ID="lblResult" runat="server" Font-Bold="true" Font-Size="Large"></asp:Label>
+        </div>
+    </form>
+</body>
+</html>
+
+
+
+aspx.cs
+
+using System;
+
+namespace CalculatorApp
+{
+    public partial class Default : System.Web.UI.Page
+    {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+        }
+
+        protected void btnAdd_Click(object sender, EventArgs e)
+        {
+            int a = int.Parse(txtNum1.Text);
+            int b = int.Parse(txtNum2.Text);
+            lblResult.Text = "Result: " + (a + b);
+        }
+
+        protected void btnSub_Click(object sender, EventArgs e)
+        {
+            int a = int.Parse(txtNum1.Text);
+            int b = int.Parse(txtNum2.Text);
+            lblResult.Text = "Result: " + (a - b);
+        }
+
+        protected void btnMul_Click(object sender, EventArgs e)
+        {
+            int a = int.Parse(txtNum1.Text);
+            int b = int.Parse(txtNum2.Text);
+            lblResult.Text = "Result: " + (a * b);
+        }
+
+        protected void btnDiv_Click(object sender, EventArgs e)
+        {
+            int a = int.Parse(txtNum1.Text);
+            int b = int.Parse(txtNum2.Text);
+            if (b != 0)
+                lblResult.Text = "Result: " + ((double)a / b);
+            else
+                lblResult.Text = "Cannot divide by zero";
+        }
+    }
+}
+
+
+
