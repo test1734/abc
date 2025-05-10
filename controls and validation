@@ -12,7 +12,7 @@ WebForm1.aspx:
             <asp:Label ID="Label3" runat="server" Text="Form Validation"></asp:Label>
         </div>
         <asp:Label ID="Label1" runat="server" Text="Label">Username:</asp:Label>
-            <asp:TextBox ID="TextBox1" runat="server" OnTextChanged="TextBox1_TextChanged"></asp:TextBox>
+            <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
         <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="TextBox1" Display="Dynamic" ErrorMessage="Username is mandatory" ForeColor="Red" SetFocusOnError="True">*</asp:RequiredFieldValidator>
         <asp:Label ID="Label2" runat="server" Text="Password:"></asp:Label>        <asp:TextBox ID="TextBox2" runat="server" TextMode="Password"></asp:TextBox>
         <asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server" ControlToValidate="TextBox2" Display="Dynamic" ErrorMessage="Please enter the Password" ForeColor="Red" SetFocusOnError="True">*</asp:RequiredFieldValidator>
