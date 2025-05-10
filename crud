@@ -140,8 +140,11 @@ namespace crud
 
 table 
 CREATE TABLE [dbo].[Order] (
-    OrderId INT NOT NULL PRIMARY KEY,
-    OrderName NVARCHAR(50) NOT NULL,
-    Price DECIMAL(18, 0) NOT NULL
+    [OrderId]   INT           NOT NULL,
+    [OrderName] NVARCHAR (50) NULL,
+    [Price]     DECIMAL (18)  NULL,
+    PRIMARY KEY CLUSTERED ([OrderId] ASC)
 );
+
+
 
